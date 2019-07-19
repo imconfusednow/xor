@@ -21,6 +21,8 @@ class Population:
         self.species = [Species(0, self.networks[0].dna)]
         self.neuron_ids = set()
         self.connection_ids = set()
+        self.this_to_add = 0
+        self.fitness_sum = 0
 
     def get_pop(self):
         return self.networks
@@ -36,6 +38,7 @@ class Population:
         self.speciate(pop)
         self.extinct_species()
         self.cull_and_replace()
+        self.extinct_species()
         self.networks = []
         for s in self.species:
             self.networks += s.members
@@ -54,8 +57,11 @@ class Population:
             fitness = s.set_fitness()
             fitness_sum += fitness
 
-        for s in self.species:
+        self.fitness_sum = fitness_sum
+
+        for s in self.species:        	
             to_add = math.floor(s.fitness / fitness_sum * self.size) + pass_on_extra
+            if s.id == 0: self.this_to_add = to_add
             # print("ta", s.fitness, fitness_sum, self.size)
             # print(s.template_genome)
             if len(s.members) > 5:
