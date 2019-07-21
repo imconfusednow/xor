@@ -43,8 +43,8 @@ class Neuron:
     def activation(self, value):
         return numpy.tanh(value)
 
-    # return 1 / (1 + math.exp(-value))
-    # return max(0,value)
+    	#return 1 / (1 + math.exp(-value))
+    	#return max(0,value)
 
     def add_connection(self, connection):
         self.connections.append(connection)
